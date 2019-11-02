@@ -1,8 +1,11 @@
 package LEM2
 
+import (
+	"io/ioutil"
+)
+
 func main() {
 
-
-	data, err := ioutill.ReadFile()
+	data, err := ioutil.ReadFile()
 
 }
