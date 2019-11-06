@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
+
+	//"strings"
 )
 
 func DieOnError(err error) {
@@ -14,6 +17,38 @@ func DieOnError(err error) {
 		panic(err)
 	}
 }
+
+
+
+type attributeObject struct{
+	attribute	string
+	caseNum		int
+	value 		string
+}
+
+type tuple struct{
+	attribute string
+	value	  string
+
+}
+
+func (a *attributeObject) String(){
+	fmt.Printf("attribute: %s, value: %s case number: %d\n",a.attribute,a.value,a.caseNum)
+}
+func (t *tuple) String(){
+	fmt.Printf("(%s, %s) ",t.attribute,t.value)
+}
+
+func isSpecialCharacter(s string) bool{
+	list := []string{" ", "[", "]", "!", "/", ""}
+	for _, v := range list{
+		if s == v{
+			return true
+		}
+	}
+	return false
+}
+
 
 func LEM2() {
 /*
@@ -27,70 +62,108 @@ func LEM2() {
 
 	*/
 
+
 	dir, err := os.Getwd()
-	path := filepath.Join(dir,"/dataset/wine.txt")
+	path := filepath.Join(dir,"/dataset/test.txt")
 	f, err := os.Open(path)
 	DieOnError(err)
 	scanner := bufio.NewScanner(f)
 	numAttributes := 0
+
+	//b := make([]byte,1)
+	num := 0
+	attributeMap := make(map[string][]*attributeObject)
+	decisionMap := make(map[string][]int)
+	attributeList := make([]string,0)
+	attributeValueBlock := make(map[tuple][]int)
+
+
+
 	for scanner.Scan(){
-		b := make([]byte,1)
+		//r is the entire line read in
 		r := bytes.NewBuffer(scanner.Bytes())
-		fmt.Println(r.String())
+		//if num == 2 {fmt.Println(r)}
 
-		//read the "<" character
-		_, err = r.Read(b)
-		DieOnError(err)
+		for num == 0{
 
-		//read the whitespace character
-		_, err = r.Read(b)
-		DieOnError(err)
-
-		for true {
-			_, err = r.Read(b)
+			//now one character (byte) is read from that line
+			b, err  := r.ReadByte()
 			DieOnError(err)
-			//if letter "a" then count the attribute
-			if string(b) == "a" {
+			s := string(b)
+			fmt.Print(s)
+			if s == "a"{
 				numAttributes++
-			}else if string(b) == "d"{
-				break
-			}
-
-
-		}
-		break
-
-	}
-	fmt.Println(numAttributes)
-/*
-	for true {
-			_, err = f.Read(b)
-			DieOnError(err)
-			//if letter "a" then count the attribute
-			if string(b) == "a" {
-				numAttributes++
-			}else if string(b) == "d"{
+			}else if s == "d"  {
+					fmt.Print("\n")
 					break
 			}
 
-
-	}
-	decisionIndex := numAttributes
-	fmt.Println(decisionIndex)
-
-	for true{
-		_, err = f.Read(b)
-		DieOnError(err)
-		if string(b) == "\n"{
-			fmt.Println(decisionIndex,"heyyyyyy")
-			break
 		}
-		decisionIndex++
+
+		if num == 1{
+			//fmt.Println(r.String())
+
+			att := strings.SplitAfter(r.String()," ")
+			for _, v := range att{
+				if t := strings.TrimSpace(v); t != "d" && !isSpecialCharacter(t){
+					attributeList = append(attributeList,t)
+					}
+			}
+
+		}
+
+		if num > 1{
+			caseNum := num - 1
+
+			att := strings.SplitAfter(r.String()," ")
+			//l := len(att)
+			for i, v := range att {
+					t := strings.TrimSpace(v)
+					if i == numAttributes {
+						if _, ok := decisionMap[t]; ok {
+							decisionMap[t] = append(decisionMap[t], caseNum)
+							}else{
+								decisionMap[t] = []int{caseNum}
+						}
+					}else if !isSpecialCharacter(t){
+						a := new(attributeObject)
+						if i  <= numAttributes-1 {
+						attributeName := attributeList[i]
+						a.attribute = attributeName
+						a.caseNum = caseNum
+						a.value = t
+						attributeMap[attributeName] = append(attributeMap[attributeName],a)
+						}
+						//fmt.Print(v)
+					}
+				}
+			}
+		num++
+		//if num == 9 {break}
+
+		}
+
+	for _, v := range attributeMap{
+		for _, v1 := range v{
+			//v1.String()
+			t := tuple{
+				attribute: v1.attribute,
+				value: v1.value,
+			}
+
+			if _ ,ok := attributeValueBlock[t]; ok{
+				attributeValueBlock[t] = append(attributeValueBlock[t],v1.caseNum)
+			}else{
+				attributeValueBlock[t] = []int{v1.caseNum}
+			}
+		}
 	}
 
-	//fmt.Print(string(data))
-	DieOnError(err)
 
-
- */
+for i,v := range attributeValueBlock{
+	i.String()
+	fmt.Printf("%d \n",v)
 }
+
+}
+

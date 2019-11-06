@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7bd03cbb-e961-4c00-ab34-0d336ead760a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/run/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataParser.go" beforeDir="false" afterPath="$PROJECT_DIR$/dataParser.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataset/wine.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/wine.txt" afterDir="false" />
@@ -14,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -30,11 +29,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dataParser.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+            <state relative-caret-position="203">
+              <caret line="163" column="14" selection-start-line="163" selection-start-column="14" selection-end-line="163" selection-end-column="14" />
               <folding>
-                <element signature="e#14#56#0" expanded="true" />
+                <element signature="e#14#72#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/go/src/runtime/panic.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="145">
+              <caret line="689" selection-start-line="689" selection-end-line="689" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/go/src/strings/strings.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="819" column="5" selection-start-line="819" selection-start-column="5" selection-end-line="819" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -42,7 +59,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file:///usr/local/go/src/bufio/scan.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
+            <state relative-caret-position="354">
               <caret line="133" column="18" selection-start-line="133" selection-start-column="18" selection-end-line="133" selection-end-column="18" />
             </state>
           </provider>
@@ -51,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataset/wine.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="42">
+              <caret line="2" column="134" lean-forward="true" selection-start-line="2" selection-start-column="134" selection-end-line="2" selection-end-column="134" />
             </state>
           </provider>
         </entry>
@@ -75,8 +92,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="105">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -89,6 +106,11 @@
         <option value="Go File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>attributeMap</find>
+    </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
@@ -106,10 +128,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="477" />
-    <option name="y" value="23" />
-    <option name="width" value="873" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="x" value="339" />
+    <option name="y" value="40" />
+    <option name="width" value="1176" />
     <option name="height" value="816" />
   </component>
   <component name="ProjectView">
@@ -201,29 +223,37 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="477" y="23" width="873" height="816" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28880867" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1988555" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" weight="0.32892805" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32892805" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.04405286" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4371029" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39898348" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32892805" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32892805" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.1321474" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,7 +263,69 @@
     <MESSAGE value="moved data files into dataset directory" />
     <option name="LAST_COMMIT_MESSAGE" value="moved data files into dataset directory" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/dataParser.go</url>
+          <line>145</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/dataParser.go</url>
+          <line>163</line>
+          <properties />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/dataset/austr.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="24" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/bytes/buffer.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="336" column="33" selection-start-line="336" selection-start-column="33" selection-end-line="336" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/bufio/scan.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="133" column="18" selection-start-line="133" selection-start-column="18" selection-end-line="133" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/test.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/bowl.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/iris.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///usr/local/go/src/runtime/panic.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="689" selection-start-line="689" selection-end-line="689" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -244,49 +336,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/test.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/austr.txt">
+    <entry file="file:///usr/local/go/src/strings/strings.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="24" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/bowl.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/iris.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="195">
+          <caret line="819" column="5" selection-start-line="819" selection-start-column="5" selection-end-line="819" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dataset/wine.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/go/src/bufio/scan.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="133" column="18" selection-start-line="133" selection-start-column="18" selection-end-line="133" selection-end-column="18" />
+        <state relative-caret-position="42">
+          <caret line="2" column="134" lean-forward="true" selection-start-line="2" selection-start-column="134" selection-end-line="2" selection-end-column="134" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dataParser.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+        <state relative-caret-position="203">
+          <caret line="163" column="14" selection-start-line="163" selection-start-column="14" selection-end-line="163" selection-end-column="14" />
           <folding>
-            <element signature="e#14#56#0" expanded="true" />
+            <element signature="e#14#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
