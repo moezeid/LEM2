@@ -15,23 +15,35 @@ func DieOnError(err error) {
 		panic(err)
 	}
 }
+type Env struct{
+	AttributeMap map[string][]*AttributeObject
 
-type attributeObject struct {
+	DecisionMap map[string][]int
+
+	AttributeValueBlock map[Tuple][]int
+
+	AttributeList []string
+
+}
+
+type AttributeObject struct {
 	attribute string
 	caseNum   int
 	value     string
 }
 
-type tuple struct {
-	attribute string
-	value     string
+type Tuple struct {
+	Attribute string
+	Value     string
 }
 
-func (a *attributeObject) String() {
-	fmt.Printf("attribute: %s, value: %s case number: %d\n", a.attribute, a.value, a.caseNum)
+
+
+func (a *AttributeObject) String() {
+	fmt.Printf("Attribute: %s, Value: %s case number: %d\n", a.attribute, a.value, a.caseNum)
 }
-func (t *tuple) String() {
-	fmt.Printf("(%s, %s) ", t.attribute, t.value)
+func (t *Tuple) String() {
+	fmt.Printf("(%s, %s) ", t.Attribute, t.Value)
 }
 
 func isSpecialCharacter(s string) bool {
@@ -44,10 +56,10 @@ func isSpecialCharacter(s string) bool {
 	return false
 }
 
-func Parse() {
+func(e *Env) Parse() {
 
 	dir, err := os.Getwd()
-	path := filepath.Join(dir, "/dataset/bowl.txt")
+	path := filepath.Join(dir, "/dataset/test.txt")
 	f, err := os.Open(path)
 	DieOnError(err)
 	scanner := bufio.NewScanner(f)
@@ -55,15 +67,10 @@ func Parse() {
 
 	//b := make([]byte,1)
 	num := 0
-	attributeMap := make(map[string][]*attributeObject)
-	decisionMap := make(map[string][]int)
-	attributeList := make([]string, 0)
-	attributeValueBlock := make(map[tuple][]int)
 
 	for scanner.Scan() {
 		//r is the entire line read in
 		r := bytes.NewBuffer(scanner.Bytes())
-		//if num == 2 {fmt.Println(r)}
 
 		//this loop reads the first line that looks like " < a, a, ..., d >
 		for num == 0 {
@@ -89,7 +96,7 @@ func Parse() {
 			line := strings.SplitAfter(r.String(), " ")
 			for _, v := range line {
 				if t := strings.TrimSpace(v); t != "d" && !isSpecialCharacter(t) {
-					attributeList = append(attributeList, t)
+					e.AttributeList = append(e.AttributeList, t)
 				}
 			}
 
@@ -108,19 +115,19 @@ func Parse() {
 
 				t := strings.TrimSpace(v)
 				if !isSpecialCharacter(t) && attributesCollected == numAttributes {
-					if _, ok := decisionMap[t]; ok {
-						decisionMap[t] = append(decisionMap[t], caseNum)
+					if _, ok := e.DecisionMap[t]; ok {
+						e.DecisionMap[t] = append(e.DecisionMap[t], caseNum)
 					} else {
-						decisionMap[t] = []int{caseNum}
+						e.DecisionMap[t] = []int{caseNum}
 					}
 				} else if !isSpecialCharacter(t) {
-					a := new(attributeObject)
+					a := new(AttributeObject)
 					if attributesCollected < numAttributes {
-						attributeName := attributeList[attributesCollected]
+						attributeName := e.AttributeList[attributesCollected]
 						a.attribute = attributeName
 						a.caseNum = caseNum
 						a.value = t
-						attributeMap[attributeName] = append(attributeMap[attributeName], a)
+						e.AttributeMap[attributeName] = append(e.AttributeMap[attributeName], a)
 						attributesCollected++
 					}
 				}
@@ -131,32 +138,32 @@ func Parse() {
 
 	}
 
-	//after all the attribute mappings are set up we
-	//are free to create attribute-value blocks
-	for _, v := range attributeMap {
+	//after all the Attribute mappings are set up we
+	//are free to create Attribute-Value blocks
+	for _, v := range e.AttributeMap {
 		for _, v1 := range v {
 			//v1.String()
-			t := tuple{
-				attribute: v1.attribute,
-				value:     v1.value,
+			t := Tuple{
+				Attribute: v1.attribute,
+				Value:     v1.value,
 			}
 
-			if _, ok := attributeValueBlock[t]; ok {
-				attributeValueBlock[t] = append(attributeValueBlock[t], v1.caseNum)
+			if _, ok := e.AttributeValueBlock[t]; ok {
+				e.AttributeValueBlock[t] = append(e.AttributeValueBlock[t], v1.caseNum)
 			} else {
-				attributeValueBlock[t] = []int{v1.caseNum}
+				e.AttributeValueBlock[t] = []int{v1.caseNum}
 			}
 		}
 	}
 
 	//prints [(a,v)]
 
-	for i, v := range attributeValueBlock {
+	for i, v := range e.AttributeValueBlock {
 		i.String()
 		fmt.Printf(" covers cases: %d \n", v)
 	}
 
-	for i, v := range decisionMap {
+	for i, v := range e.DecisionMap {
 		fmt.Printf("(decision,%s): %d\n", i, v)
 	}
 
