@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/LEM2"
 )
 
@@ -13,17 +11,27 @@ func main() {
 		DecisionMap:         make(map[string][]int),
 		AttributeList:       make([]string, 0),
 		AttributeValueBlock: make(map[LEM2.Tuple][]int),
+		CasesCovered: 0,
 	}
-	e.Parse()
-	i := e.InitialIntersections()
-	for i, v := range i{
-		i.String()
-		fmt.Print(" ",v,"\n")
-	}
+
+
 	t := LEM2.Tuple{
-		Attribute: "D",
-		Value: "medium",
+		Attribute: "class",
+		Value: "no-recurrence-events",
 	}
-	r := e.ColumnScan(t,i)
+	list := e.Algorithm(t)
+	list.String()
+	/*
+
+
+	r, i1 := e.ColumnScan(t,i)
 	fmt.Println(r)
+	r,_ = e.ColumnScan(t,*i1)
+	fmt.Println(r)
+
+	r, _ = e.ColumnScan(t,*i1)
+	fmt.Println(r)
+
+	 */
+
 }

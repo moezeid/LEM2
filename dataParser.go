@@ -24,6 +24,8 @@ type Env struct{
 
 	AttributeList []string
 
+	CasesCovered int
+
 }
 
 type AttributeObject struct {
@@ -59,7 +61,7 @@ func isSpecialCharacter(s string) bool {
 func(e *Env) Parse() {
 
 	dir, err := os.Getwd()
-	path := filepath.Join(dir, "/dataset/test.txt")
+	path := filepath.Join(dir, "/dataset/breast.txt")
 	f, err := os.Open(path)
 	DieOnError(err)
 	scanner := bufio.NewScanner(f)
