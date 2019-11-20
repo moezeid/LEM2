@@ -16,11 +16,13 @@ func main() {
 
 
 	t := LEM2.Tuple{
-		Attribute: "class",
-		Value: "no-recurrence-events",
+		Attribute: "d",
+		Value: "1",
 	}
 	list := e.Algorithm(t)
 	list.String()
+	e.RuleCheck(list,"1")
+
 	/*
 
 

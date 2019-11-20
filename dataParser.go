@@ -61,7 +61,7 @@ func isSpecialCharacter(s string) bool {
 func(e *Env) Parse() {
 
 	dir, err := os.Getwd()
-	path := filepath.Join(dir, "/dataset/breast.txt")
+	path := filepath.Join(dir, "/dataset/austr.txt")
 	f, err := os.Open(path)
 	DieOnError(err)
 	scanner := bufio.NewScanner(f)
