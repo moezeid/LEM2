@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/LEM2"
 )
 
@@ -15,13 +17,25 @@ func main() {
 	}
 
 
-	t := LEM2.Tuple{
-		Attribute: "d",
-		Value: "1",
+
+	fmt.Print("Enter the path to the input file: ")
+
+	var input string
+/*
+	_, err := fmt.Scanln(&input)
+	for err != nil{
+		fmt.Print("Please enter a valid filepath: ")
+		_, err = fmt.Scanln(&input)
 	}
-	list := e.Algorithm(t)
+
+
+ */
+
+	e.FilePath = input
+	//fmt.Println(et)
+	list := e.Algorithm()
 	list.String()
-	e.RuleCheck(list,"1")
+	//e.RuleCheck(list,"no-recurrence-events")
 
 	/*
 

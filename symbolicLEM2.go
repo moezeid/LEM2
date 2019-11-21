@@ -7,17 +7,43 @@ import (
 )
 
 type Rule struct {
-	Attributes   []Tuple
-	Decision     Tuple
-	CasesCovered []int
+	Attributes      []Tuple
+	Decision        Tuple
+	CasesCovered    []int
+	Specificity     int
+	Strength        int
+	NumCasesCovered int
 }
 
+type LocalCovering map[string]RuleList
+
 type RuleList []Rule
+
+func (l LocalCovering) String() {
+
+	x := 0
+	var decisionName string
+
+	for i, v := range l {
+		fmt.Printf("\n")
+		if x == 0 {
+			for _, j := range v {
+				decisionName = j.Decision.Attribute
+				break
+			}
+		}
+		fmt.Printf("Ruleset for (%s, %s) \n", decisionName, i)
+		v.String()
+		x++
+	}
+
+}
 
 func (r RuleList) String() {
 	for i, v := range r {
 
 		fmt.Printf("Rule %d\n", i)
+		fmt.Printf("%d,  %d,  %d \n", v.Specificity, v.Strength, v.NumCasesCovered)
 
 		for j, v1 := range v.Attributes {
 			if v1.Value != "" {
@@ -33,7 +59,6 @@ func (r RuleList) String() {
 			}
 
 		}
-		fmt.Println("Covers cases:  ", v.CasesCovered)
 
 	}
 }
@@ -101,7 +126,7 @@ func (e *Env) InitialIntersections(decisionSet []int, goal string) InitIntersect
 	return l
 }
 
-func (e *Env) ColumnScan(goal Tuple, initialSets InitIntersection, decisionSet []int) (Tuple, InitIntersection) {
+func (e *Env) ColumnScan(goal Tuple, initialSets InitIntersection, decisionSet []int, selectedAttributeList []Tuple) (Tuple, InitIntersection) {
 
 	//	obj := e.AttributeMap[e.AttributeList[0]][0]
 	//	tuple := Tuple{
@@ -109,24 +134,23 @@ func (e *Env) ColumnScan(goal Tuple, initialSets InitIntersection, decisionSet [
 	//		obj.value,
 	//	}
 	//	att := initialSets[tuple]
+	if len(selectedAttributeList) > 0 {
+		for index := range selectedAttributeList {
+			for v := range initialSets {
+				if len(initialSets[v]) > 0 {
+					if selectedAttributeList[index].Attribute == v.Attribute && selectedAttributeList[index].Value == v.Value {
+						initialSets[v] = make([]int, 0)
+					}
+				}
+			}
+		}
+	}
+
 	max := 0
 	//var t Tuple
 	var i Tuple
 	var v []int
 	//Get the max length
-	column := make(map[string][]Tuple)
-	for j := range e.AttributeList{
-		attribute := e.AttributeList[j]
-		column[attribute] = make([]Tuple,0)
-		for q := range initialSets{
-			if q.Attribute == attribute{
-				column[attribute] = append(column[attribute],q)
-			}
-		}
-
-	}
-
-
 
 	for i, v = range initialSets {
 		if i.Attribute != "" && v != nil && len(v) > 0 {
@@ -171,7 +195,6 @@ func (e *Env) ColumnScan(goal Tuple, initialSets InitIntersection, decisionSet [
 			}
 		}
 
-
 		//now that we have the min value, lets grab the block
 		for i, v = range initialSets {
 			if i.Attribute != "" && v != nil && len(v) > 0 {
@@ -186,152 +209,182 @@ func (e *Env) ColumnScan(goal Tuple, initialSets InitIntersection, decisionSet [
 	}
 	return Tuple{}, nil
 
-	/*
-		//delete(*initialSets,t)
-		for v := range initialSets {
-			if v.Attribute != t.Attribute && v.Value != t.Value {
-				tmp := make([]int,len(initialSets[v]))
-				listCopy := copy(tmp,initialSets[v])
-				newSets[v] = []int{listCopy}
-
-			}
-		}
-
-	*/
-	/*
-		for i := range initialSets {
-
-			if t.Attribute != "" && i.Attribute != t.Attribute && i.Value != t.Value{
-				newSets[i] = Inter(e.AttributeValueBlock[i],decisionSet)
-			}
-		}
-
-	*/
-
 }
 
-func (e *Env) Algorithm(goal Tuple) RuleList {
+func (e *Env) Algorithm() LocalCovering {
 
 	e.Parse()
+	localCovering := make(LocalCovering)
+	for val, cases := range e.DecisionMap {
 
-	decisionSet := e.DecisionMap[goal.Value]
-
-	var selectedAttribute Tuple
-
-
-	mainGoal := e.DecisionMap[goal.Value]
-	ruleList := make(RuleList, 0)
-for len(decisionSet) > 0 {
-	selectedAttributeList := make([]Tuple, 0)
-	testSet := make([]int, 0)
-	i := e.InitialIntersections(decisionSet, goal.Value)
-
-	for len(selectedAttributeList) == 0 || !e.IsSubset(testSet, goal.Value) {
-
-		selectedAttribute, i = e.ColumnScan(goal, i, decisionSet)
-
-		if selectedAttribute.Attribute != "" {
-
-			selectedAttributeList = append(selectedAttributeList, selectedAttribute)
-			mainGoal = Inter(e.AttributeValueBlock[selectedAttribute], mainGoal)
-			//mainGoal = e.reduceDecisionsSet(e.AttributeValueBlock[selectedAttribute],mainGoal)
-			i = e.InitialIntersections(mainGoal,goal.Value)
-			for index := range selectedAttributeList{
-				 for v := range i{
-				 	if selectedAttributeList[index] == v{
-				 		i[v] = make([]int,0)
-					}
-				 }
-			}
-
-			//if it is an interval, check and see if it can be simplified with other attributes
-		//	if e.isInterval(selectedAttribute) {
-				//selectedAttribute = e.CheckAndAdjust(selectedAttribute, selectedAttributeList, i)
-		//		for v := range i {
-		//			if v.Attribute == selectedAttribute.Attribute && e.IntervalContained(selectedAttribute, v) || v == selectedAttribute {
-		//				_ = Inter(e.AttributeValueBlock[v], e.AttributeValueBlock[selectedAttribute])
-		//				i[v] = make([]int, 0)
-		//			}
-		//		}
-		//	}
-
-			if len(selectedAttributeList) == 1 {
-				testSet = e.AttributeValueBlock[selectedAttribute]
-			} else if len(selectedAttributeList) > 1 && len(testSet) != 0 {
-				testSet = Inter(testSet, e.AttributeValueBlock[selectedAttribute])
-			}
-			//if !e.isInterval(selectedAttribute) {
-			//	for v := range i {
-			//		if v.Attribute == selectedAttribute.Attribute {
-			//			i[v] = make([]int, 0)
-			//		}
-			//	}
-			//}
-
-		} else {
-			if len(testSet) == 0 {
-				break
-			}
+		decisionSet := cases
+		goal := Tuple{
+			Attribute: e.AttributeList[len(e.AttributeList)-1],
+			Value:     val,
 		}
-	}
-	tmp := e.IsSubset(testSet, goal.Value)
-	if len(testSet) > 0 && tmp {
-		//oldSet := decisionSet
-		casesCovered := Inter(testSet, decisionSet)
-	/*
-		if len(casesCovered) > 0 {
-			decisionSet = e.reduceDecisionsSet(casesCovered, oldSet)
+		var selectedAttribute Tuple
 
-	 */
-			tupleList := make([]Tuple, len(selectedAttributeList))
-			copy(tupleList, selectedAttributeList)
+		mainGoal := e.DecisionMap[goal.Value]
+		ruleList := make(RuleList, 0)
+		for len(decisionSet) > 0 {
+			selectedAttributeList := make([]Tuple, 0)
+			testSet := make([]int, 0)
+			i := e.InitialIntersections(decisionSet, goal.Value)
 
-			rule := Rule{
-				tupleList,
-				goal,
-				casesCovered,
-			}
-			ruleList = append(ruleList, rule)
-			mainGoal = e.reduceDecisionsSet(casesCovered,decisionSet)
-			decisionSet = e.reduceDecisionsSet(casesCovered,mainGoal)
-			//i = e.InitialIntersections(decisionSet, goal.Value)
-			/*
-			i = e.InitialIntersections(decisionSet, goal.Value)
+			for len(selectedAttributeList) == 0 || !e.IsSubset(testSet, goal.Value) {
 
-			selectedAttributeList = make([]Tuple, 0)
-			testSet = make([]int, 0)
-		} else if len(testSet) == 0 {
-			ogSet := e.DecisionMap[goal.Value]
-			for i := len(ogSet) - 1; i > 0; {
-				decisionSet = append(decisionSet, ogSet[i])
-				i--
-				if i == len(ogSet)-6 {
-					break
+				selectedAttribute, i = e.ColumnScan(goal, i, decisionSet, selectedAttributeList)
+
+				if selectedAttribute.Attribute != "" {
+					selectedAttributeList = append(selectedAttributeList, selectedAttribute)
+					mainGoal = Inter(e.AttributeValueBlock[selectedAttribute], mainGoal)
+					//mainGoal = e.reduceDecisionsSet(e.AttributeValueBlock[selectedAttribute],mainGoal)
+					i = e.InitialIntersections(mainGoal, goal.Value)
+					if e.isInterval(selectedAttribute) {
+						//remove entries in selected attribute list that match exactly attributes we already have
+						for index := range selectedAttributeList {
+							if e.isInterval(selectedAttributeList[index]) {
+								sA := selectedAttributeList[index]
+								for v := range i {
+									if sA.Attribute == v.Attribute && (e.GetFirstNum(sA) == e.GetFirstNum(v)) && v != e.SmallerInterval(sA, v) || selectedAttributeList[index] == v {
+										i[v] = make([]int, 0)
+									} else if sA.Attribute == v.Attribute && e.isInterval(v) {
+										if (e.GetSecondNum(sA) == e.GetFirstNum(v)) || (e.GetFirstNum(sA) == e.GetSecondNum(v)) {
+											i[v] = make([]int, 0)
+										}
+									}
+
+								}
+							}
+						}
+						//remove entries that are larger intervals of the selected attribute
+						//	for v := range i{
+						//		if e.isInterval(v)  && e.GetFirstNum(selectedAttribute) == e.GetFirstNum(v)  {
+						//			if selectedAttribute == e.SmallerInterval(v,selectedAttribute){
+						//				i[v] = make([]int, 0)
+						//			}
+						//		}
+						//	}
+
+					} else {
+						for index := range selectedAttributeList {
+							for v := range i {
+								if selectedAttributeList[index].Attribute == v.Attribute && selectedAttributeList[index].Value == v.Value {
+									i[v] = make([]int, 0)
+								}
+							}
+						}
+					}
+
+					//if it is an interval, check and see if it can be simplified with other attributes
+					//	if e.isInterval(selectedAttribute) {
+					//selectedAttribute = e.CheckAndAdjust(selectedAttribute, selectedAttributeList, i)
+					//		for v := range i {
+					//			if v.Attribute == selectedAttribute.Attribute && e.IntervalContained(selectedAttribute, v) || v == selectedAttribute {
+					//				_ = Inter(e.AttributeValueBlock[v], e.AttributeValueBlock[selectedAttribute])
+					//				i[v] = make([]int, 0)
+					//			}
+					//		}
+					//	}
+
+					if len(selectedAttributeList) == 1 {
+						testSet = e.AttributeValueBlock[selectedAttribute]
+					} else if len(selectedAttributeList) > 1 && len(testSet) != 0 {
+						testSet = Inter(testSet, e.AttributeValueBlock[selectedAttribute])
+					}
+					//if !e.isInterval(selectedAttribute) {
+					//	for v := range i {
+					//		if v.Attribute == selectedAttribute.Attribute {
+					//			i[v] = make([]int, 0)
+					//		}
+					//	}
+					//}
+
 				}
 			}
-			selectedAttributeList = make([]Tuple, 0)
-			testSet = make([]int, 0)
-			i = e.InitialIntersections(decisionSet, goal.Value)
+			tmp := e.IsSubset(testSet, goal.Value)
+			if len(testSet) > 0 && tmp {
+				//oldSet := decisionSet
+				casesCovered := Inter(testSet, decisionSet)
+				/*
+					if len(casesCovered) > 0 {
+						decisionSet = e.reduceDecisionsSet(casesCovered, oldSet)
+
+				*/
+				tupleList := make([]Tuple, len(selectedAttributeList))
+				copy(tupleList, selectedAttributeList)
+
+				for index := 0; index < len(tupleList)-1; index++ {
+					if e.isInterval(tupleList[index]) {
+						av := Tuple{}
+						if tupleList[index].Attribute != "" {
+							av = tupleList[index]
+							for j := range tupleList {
+								if (av.Attribute != "" && tupleList[index].Attribute != "") && (av.Attribute == tupleList[index].Attribute)&& av != tupleList[index] && e.IntervalContained(av, tupleList[index]) {
+									attribute,_ := e.SimplifyInterval(av, tupleList[j])
+									tupleList[index] = Tuple{}
+									tupleList[j] = attribute
+									newList := make([]Tuple,0)
+									for k := range tupleList{
+										if tupleList[k].Attribute != ""{
+											newList = append(newList,tupleList[k])
+										}
+									}
+									tupleList = newList
+
+								}
+							}
+
+						}
+					}
+				}
+
+				rule := Rule{
+					tupleList,
+					goal,
+					casesCovered,
+					len(tupleList),
+					len(casesCovered),
+					len(casesCovered),
+				}
+				ruleList = append(ruleList, rule)
+				mainGoal = e.reduceDecisionsSet(casesCovered, decisionSet)
+				decisionSet = e.reduceDecisionsSet(casesCovered, mainGoal)
+				//i = e.InitialIntersections(decisionSet, goal.Value)
+				/*
+						i = e.InitialIntersections(decisionSet, goal.Value)
+
+						selectedAttributeList = make([]Tuple, 0)
+						testSet = make([]int, 0)
+					} else if len(testSet) == 0 {
+						ogSet := e.DecisionMap[goal.Value]
+						for i := len(ogSet) - 1; i > 0; {
+							decisionSet = append(decisionSet, ogSet[i])
+							i--
+							if i == len(ogSet)-6 {
+								break
+							}
+						}
+						selectedAttributeList = make([]Tuple, 0)
+						testSet = make([]int, 0)
+						i = e.InitialIntersections(decisionSet, goal.Value)
 
 
-			 */
+				*/
+			}
+			//ruleList.String()
+
 		}
-		//ruleList.String()
+		localCovering[goal.Value] = ruleList
 
 	}
-
-
-
-	return ruleList
-
+	return localCovering
 }
-
-
 
 func (e *Env) IsSubset(testSet []int, concept string) bool {
 
 	desiredSet := e.DecisionMap[concept]
-	if testSet == nil{
+	if testSet == nil {
 		return false
 	}
 	if ok := len(testSet) > len(desiredSet); ok {
@@ -393,10 +446,9 @@ func (e *Env) IntersectOverList(a []Tuple) []int {
 					tmp := Inter(intersection, e.AttributeValueBlock[a[i+1]])
 					if len(tmp) != 0 {
 						intersection = tmp
-					}else{
+					} else {
 						a[i+1] = Tuple{}
 					}
-
 
 				}
 
@@ -441,25 +493,23 @@ func (e *Env) SimplifyInterval(a1, a2 Tuple) (Tuple, []int) {
 			newHigh = lb[1]
 		}
 
-
-		if newHigh == newLow  {
-			tuple := e.SmallerInterval(a1,a2)
+		if newHigh == newLow {
+			tuple := e.SmallerInterval(a1, a2)
 
 			//newValue := newLow + ".." + newHigh
 
 			newSet := e.AttributeValueBlock[tuple]
 
 			e.AttributeValueBlock[tuple] = newSet
-			return tuple,newSet
-
+			return tuple, newSet
 
 		}
 		newValue := newLow + ".." + newHigh
 
 		newSet := Inter(e.AttributeValueBlock[a1], e.AttributeValueBlock[a2])
-		if len(newSet) == 0{
-			t := e.SmallerInterval(a1,a2)
-			return t,e.AttributeValueBlock[t]
+		if len(newSet) == 0 {
+			t := e.SmallerInterval(a1, a2)
+			return t, e.AttributeValueBlock[t]
 		}
 
 		newTuple := Tuple{
@@ -514,13 +564,13 @@ func (e *Env) CheckAndAdjust(selectedAttribute Tuple, selectedAttributeList []Tu
 		if index < len(selectedAttributeList) && selectedAttributeList[index].Attribute == selectedAttribute.Attribute {
 			att := selectedAttributeList[index]
 			tuple, list := e.SimplifyInterval(selectedAttribute, att)
-			if tuple != selectedAttribute && list != nil{
+			if tuple != selectedAttribute && list != nil {
 				for v := range i {
-					if v == selectedAttribute{
-						i[v] = make([]int,0)
+					if v == selectedAttribute {
+						i[v] = make([]int, 0)
 					}
 				}
- 			}
+			}
 			if list != nil {
 				//originalAtt := selectedAttribute
 				selectedAttribute = tuple
@@ -529,19 +579,19 @@ func (e *Env) CheckAndAdjust(selectedAttribute Tuple, selectedAttributeList []Tu
 				selectedAttributeList[length-1] = Tuple{}
 				selectedAttributeList = selectedAttributeList[:length-1]
 				for v := range i {
-						vF := e.GetFirstNum(v)
-						oF := e.GetFirstNum(selectedAttribute)
-						if vF == oF {
+					vF := e.GetFirstNum(v)
+					oF := e.GetFirstNum(selectedAttribute)
+					if vF == oF {
 
-								if t := e.SmallerInterval(v,selectedAttribute); t==selectedAttribute {
-									i[v] = make([]int, 0)
-								}
+						if t := e.SmallerInterval(v, selectedAttribute); t == selectedAttribute {
+							i[v] = make([]int, 0)
 						}
+					}
 				}
 
-				for v := range i{
-					if v == att{
-						i[v] = make([]int,0)
+				for v := range i {
+					if v == att {
+						i[v] = make([]int, 0)
 					}
 				}
 
@@ -562,13 +612,13 @@ func (e *Env) CheckAndAdjust(selectedAttribute Tuple, selectedAttributeList []Tu
 
 func (e *Env) SmallerInterval(t1, t2 Tuple) Tuple {
 	lb := strings.Split(t1.Value, "..")
-	num1, _ := strconv.ParseFloat(lb[0],64)
-	num2, _ := strconv.ParseFloat(lb[1],64)
+	num1, _ := strconv.ParseFloat(lb[0], 64)
+	num2, _ := strconv.ParseFloat(lb[1], 64)
 
 	lb2 := strings.Split(t2.Value, "..")
 
-	otherNum, _ := strconv.ParseFloat(lb2[0],64)
-	otherNum2, _ := strconv.ParseFloat(lb2[1],64)
+	otherNum, _ := strconv.ParseFloat(lb2[0], 64)
+	otherNum2, _ := strconv.ParseFloat(lb2[1], 64)
 
 	diff1 := num2 - num1
 	if diff1 < 0 {
@@ -588,11 +638,11 @@ func (e *Env) SmallerInterval(t1, t2 Tuple) Tuple {
 
 func (e *Env) isFirstNumSame(t1, t2 Tuple) bool {
 	lb := strings.Split(t1.Value, "..")
-	num1, _ := strconv.ParseFloat(lb[0],64)
+	num1, _ := strconv.ParseFloat(lb[0], 64)
 
 	lb2 := strings.Split(t2.Value, "..")
 
-	otherNum, _ := strconv.ParseFloat(lb2[0],64)
+	otherNum, _ := strconv.ParseFloat(lb2[0], 64)
 	if num1 == otherNum {
 		return true
 	}
@@ -602,37 +652,31 @@ func (e *Env) isFirstNumSame(t1, t2 Tuple) bool {
 
 func (e *Env) GetFirstNum(t Tuple) float64 {
 	lb := strings.Split(t.Value, "..")
-	num1, _ := strconv.ParseFloat(lb[0],64)
+	num1, _ := strconv.ParseFloat(lb[0], 64)
 	return num1
 }
 func (e *Env) GetSecondNum(t Tuple) float64 {
 	lb := strings.Split(t.Value, "..")
-	num2, _ := strconv.ParseFloat(lb[1],64)
+	num2, _ := strconv.ParseFloat(lb[1], 64)
 	return num2
 }
 
-
-func (e *Env) IntervalContained(t1, t2 Tuple) bool{
+func (e *Env) IntervalContained(t1, t2 Tuple) bool {
 	lb := strings.Split(t1.Value, "..")
-	i11, _ := strconv.ParseFloat(lb[0],64)
-	i12, _ := strconv.ParseFloat(lb[1],64)
+	i11, _ := strconv.ParseFloat(lb[0], 64)
+	i12, _ := strconv.ParseFloat(lb[1], 64)
 
 	lb2 := strings.Split(t2.Value, "..")
 
-	i21, _ := strconv.ParseFloat(lb2[0],64)
-	i22, _ := strconv.ParseFloat(lb2[1],64)
-
-
+	i21, _ := strconv.ParseFloat(lb2[0], 64)
+	i22, _ := strconv.ParseFloat(lb2[1], 64)
 
 	if i11 <= i21 && i12 <= i22 {
-			return true
+		return true
 
-	}else if i11 >= i21 && i12 >= i22{
+	} else if i11 >= i21 && i12 >= i22 {
 		return true
 	}
 	return false
-
-
-
 
 }

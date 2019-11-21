@@ -1,10 +1,10 @@
 < a a a d >
 [ wind humidity temp trip ]
-4..6 blue blue positive
-6..30 blue black negative
-4..6 red blue positive
-s black blue negative
-large black blue negative
-large blue blue positive
-large black black negative
-small blue black negative
+4 low medium yes
+8 low low yes
+4 medium medium yes
+8 medium high maybe
+12 low medium maybe
+16 high low no
+30 high high no
+12 high high no
