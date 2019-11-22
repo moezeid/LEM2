@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7bd03cbb-e961-4c00-ab34-0d336ead760a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataParser.go" beforeDir="false" afterPath="$PROJECT_DIR$/dataParser.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/run/main.go" afterDir="false" />
-    </list>
+    <list default="true" id="7bd03cbb-e961-4c00-ab34-0d336ead760a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,11 +10,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataParser.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="68" column="104" selection-start-line="68" selection-start-column="104" selection-end-line="68" selection-end-column="104" />
+            <state relative-caret-position="42">
+              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding>
+                <element signature="e#14#94#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -33,10 +31,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/symbolicLEM2.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
+            <state relative-caret-position="5314">
               <caret line="330" selection-start-line="330" selection-end-line="331" />
             </state>
           </provider>
@@ -91,7 +89,7 @@
         <entry file="file://$PROJECT_DIR$/run/main.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="371">
-              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
             </state>
           </provider>
         </entry>
@@ -290,13 +288,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="816" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49801588" visible="true" weight="0.481402" />
       <window_info id="Structure" order="1" sideWeight="0.5019841" side_tool="true" weight="0.021459227" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32892805" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.37591776" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37591776" />
       <window_info anchor="bottom" x="21" y="319" width="1398" height="261" id="Debug" order="3" weight="0.4040661" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -304,7 +303,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32892805" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3171806" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3171806" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -554,21 +553,24 @@
     <entry file="file://$PROJECT_DIR$/run/main.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="371">
-          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/symbolicLEM2.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="330" selection-start-line="330" selection-end-line="331" />
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dataParser.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="68" column="104" selection-start-line="68" selection-start-column="104" selection-end-line="68" selection-end-column="104" />
+        <state relative-caret-position="42">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#14#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/symbolicLEM2.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5314">
+          <caret line="330" selection-start-line="330" selection-end-line="331" />
         </state>
       </provider>
     </entry>
