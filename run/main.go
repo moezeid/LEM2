@@ -21,7 +21,7 @@ func main() {
 	fmt.Print("Enter the path to the input file: ")
 
 	var input string
-/*
+
 	_, err := fmt.Scanln(&input)
 	for err != nil{
 		fmt.Print("Please enter a valid filepath: ")
@@ -29,7 +29,7 @@ func main() {
 	}
 
 
- */
+
 
 	e.FilePath = input
 	//fmt.Println(et)

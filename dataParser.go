@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -64,16 +63,12 @@ func isSpecialCharacter(s string) bool {
 func (e *Env) Parse() {
 
 	listOfCases := make([]int,0)
-	dir, err := os.Getwd()
-	path := filepath.Join(dir, "/dataset/wine.txt")
-
-	f, err := os.Open(path)
+	f, err := os.Open(e.FilePath)
 	for err != nil{
 		var input string
-		fmt.Print("Please enter a valid filepath: ")
+		fmt.Print("Please enter a valid absolute filepath (include leading slash, e.g /path/to/file.txt): ")
 		_, err = fmt.Scanln(&input)
-		path := filepath.Join(dir,input)
-		f, err = os.Open(path)
+		f, err = os.Open(input)
 
 	}
 

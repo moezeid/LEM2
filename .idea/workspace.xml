@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7bd03cbb-e961-4c00-ab34-0d336ead760a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dataset/test3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/numericalLEM2.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataParser.go" beforeDir="false" afterPath="$PROJECT_DIR$/dataParser.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/breast.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/breast.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/test2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/test2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/run/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symbolicLEM2.go" beforeDir="false" afterPath="$PROJECT_DIR$/symbolicLEM2.go" afterDir="false" />
-    </list>
+    <list default="true" id="7bd03cbb-e961-4c00-ab34-0d336ead760a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,15 +10,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataParser.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2940">
-              <caret line="148" column="32" selection-start-line="148" selection-start-column="27" selection-end-line="148" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataset/test3.txt">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,11 +28,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/symbolicLEM2.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="319" selection-start-line="319" selection-end-line="319" />
+            <state relative-caret-position="282">
+              <caret line="330" selection-start-line="330" selection-end-line="331" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/go.mod">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="17" selection-start-column="17" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -175,6 +166,7 @@
         <option value="$PROJECT_DIR$/dataParser.go" />
         <option value="$PROJECT_DIR$/run/main.go" />
         <option value="$PROJECT_DIR$/symbolicLEM2.go" />
+        <option value="$PROJECT_DIR$/go.mod" />
       </list>
     </option>
   </component>
@@ -286,7 +278,7 @@
     <frame x="0" y="23" width="1440" height="816" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49801588" visible="true" weight="0.072961375" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49801588" visible="true" weight="0.481402" />
       <window_info id="Structure" order="1" sideWeight="0.5019841" side_tool="true" weight="0.021459227" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -420,9 +412,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/interfaces.go" />
-    <entry file="file://$PROJECT_DIR$/go.mod">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file:///usr/local/go/src/builtin/builtin.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="239">
@@ -551,11 +540,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/symbolicLEM2.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="319" selection-start-line="319" selection-end-line="319" />
-          <folding>
-            <element signature="e#14#83#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="282">
+          <caret line="330" selection-start-line="330" selection-end-line="331" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/go.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
         </state>
       </provider>
     </entry>
