@@ -29,7 +29,7 @@ type Env struct {
 
 	NumericMap map[string][]float64
 
-	FilePath   string
+	FilePath string
 }
 
 type AttributeObject struct {
@@ -62,9 +62,9 @@ func isSpecialCharacter(s string) bool {
 
 func (e *Env) Parse() {
 
-	listOfCases := make([]int,0)
+	listOfCases := make([]int, 0)
 	f, err := os.Open(e.FilePath)
-	for err != nil{
+	for err != nil {
 		var input string
 		fmt.Print("Please enter a valid absolute filepath (include leading slash, e.g /path/to/file.txt): ")
 		_, err = fmt.Scanln(&input)
@@ -117,7 +117,7 @@ func (e *Env) Parse() {
 		//mappings for attributes
 		if num > 1 {
 			caseNum := num - 1
-			listOfCases = append(listOfCases,caseNum)
+			listOfCases = append(listOfCases, caseNum)
 			line := strings.SplitAfter(r.String(), " ")
 			//l := len(line)
 			attributesCollected := 0
@@ -176,7 +176,7 @@ func (e *Env) Parse() {
 				Attribute: v1.attribute,
 				Value:     v1.value,
 			}
-			if isNumeric(t)  {
+			if isNumeric(t) {
 				numericList := e.NumericMap[t.Attribute]
 				cP := createCutPoints(numericList)
 				for i := range cP {
@@ -194,7 +194,7 @@ func (e *Env) Parse() {
 						secondPartOfInterval,
 					}
 					setsCoveredByFirst := e.FindCasesForInterval(numericList[0], cP[i])
-					setsCoveredBySecond := e.reduceDecisionsSet(setsCoveredByFirst,listOfCases)
+					setsCoveredBySecond := e.reduceDecisionsSet(setsCoveredByFirst, listOfCases)
 					e.AttributeValueBlock[firstInterval] = setsCoveredByFirst
 					e.AttributeValueBlock[remainderInterval] = setsCoveredBySecond
 
@@ -213,8 +213,6 @@ func (e *Env) Parse() {
 		}
 
 	}
-
-
 
 }
 
@@ -272,11 +270,11 @@ func createCutPoints(list []float64) []float64 {
 	//length := len(list)
 
 	cutPoints := make([]float64, 0)
-	for i := range list{
-		if i + 1 ==len(list){
+	for i := range list {
+		if i+1 == len(list) {
 			break
 		}
-		cutPoints = append(cutPoints,(list[i] + list[i+1]) / 2)
+		cutPoints = append(cutPoints, (list[i]+list[i+1])/2)
 	}
 	return cutPoints
 
