@@ -328,7 +328,7 @@ func (e *Env) Algorithm() LocalCovering {
 					casesCovered,
 					len(tupleList),
 					len(casesCovered),
-					len(casesCovered),
+					len(e.DecisionMap[goal.Value]),
 				}
 				ruleList = append(ruleList, rule)
 				mainGoal = e.reduceDecisionsSet(casesCovered, decisionSet)

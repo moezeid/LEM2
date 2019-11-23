@@ -14,26 +14,37 @@ First:
     
    Navigate to your home directory
       
-      $ cd ~/
+      ~$ cd ~/
      
    Download the go project
       
-      $ curl -O https://storage.googleapis.com/golang/go1.11.2.linux-amd64.tar.gz
+      ~$ curl -O https://storage.googleapis.com/golang/go1.11.2.linux-amd64.tar.gz
    
    Extract the package and set an environment variable
     
-      $ tar -xvf go1.11.2.linux-amd64.tar.gz
-      $ GO=$~/go/bin/go
+      ~$ tar -xvf go1.11.2.linux-amd64.tar.gz
+      ~$ GO=~/go/bin/go
          
-    
-   Now download the MLEM2 code and go into the directory:
+   If you already have the code in a zipfile:
      
-     $ git clone https://github.com/moezeid/LEM2.git 
-     $ cd LEM2
+        $ unzip LEM2.zip      
+         
+         
+   If you don't already have the code:
+   Now download the MLEM2 code
+     
+     ~$ git clone https://github.com/moezeid/LEM2.git 
+    
+  
+   Go into the directory 
+    
+     ~$ cd LEM2
      
    Build and run the code:
      
-     $~/LEM2 $GO build run/main.go
-     $~/LEM2 ./main
+     ~/LEM2  $GO build run/main.go
+     ~/LEM2 ./main
       
+    
+   An output file will be produced in the same directory containing the results.
     
