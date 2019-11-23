@@ -1,6 +1,7 @@
 package LEM2
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
 	"strings"
@@ -14,6 +15,7 @@ type Rule struct {
 	Strength        int
 	NumCasesCovered int
 }
+var OutputFile bytes.Buffer
 
 //maps a decision to a list of a,v pairs
 type DecisionToPairs map[Tuple][]Tuple
@@ -28,46 +30,76 @@ type RuleList []Rule
 
 func (l LocalCovering) String() {
 
+
 	x := 0
 	var decisionName string
 
 	for i, v := range l {
-		fmt.Printf("\n")
+		_,_ = OutputFile.Write([]byte(fmt.Sprintf("\n")))
 		if x == 0 {
 			for _, j := range v {
 				decisionName = j.Decision.Attribute
 				break
 			}
 		}
-		fmt.Printf("Ruleset for (%s, %s) \n", decisionName, i)
-		v.String()
+
+		_,_ = OutputFile.Write([]byte(fmt.Sprintf("Ruleset for (%s, %s) \n", decisionName, i)))
+
+		for j, w := range v {
+
+			_,_ = OutputFile.Write([]byte(fmt.Sprintf("Rule %d\n", j)))
+			_,_ = OutputFile.Write([]byte(fmt.Sprintf("%d,  %d,  %d \n", w.Specificity, w.Strength, w.NumCasesCovered)))
+
+			for a, b := range w.Attributes {
+				if b.Value != "" {
+					_,_ = OutputFile.Write([]byte(fmt.Sprintf("(%s, %s) ", b.Attribute, b.Value)))
+					if len(w.Attributes) > 1 && a < len(w.Attributes)-1 {
+						_,_ = OutputFile.Write([]byte(fmt.Sprint(" & ")))
+					}
+				}
+				if a == len(w.Attributes)-1 {
+					_,_ = OutputFile.Write([]byte(fmt.Sprint(" -----> ")))
+					_,_ = OutputFile.Write([]byte(fmt.Sprintf("(%s, %s) ", w.Decision.Attribute, w.Decision.Value)))
+					_,_ = OutputFile.Write([]byte(fmt.Sprint("\n")))
+				}
+
+			}
+
+		}
 		x++
 	}
+	//DieOnError(OutputFile.Close())
+//	fmt.Print(OutputFile.String())
+
+
 
 }
 
 func (r RuleList) String() {
+	fmt.Println("here")
 	for i, v := range r {
 
-		fmt.Printf("Rule %d\n", i)
-		fmt.Printf("%d,  %d,  %d \n", v.Specificity, v.Strength, v.NumCasesCovered)
+		_,_ = OutputFile.Write([]byte(fmt.Sprintf("Rule %d\n", i)))
+		_,_ = OutputFile.Write([]byte(fmt.Sprintf("%d,  %d,  %d \n", v.Specificity, v.Strength, v.NumCasesCovered)))
 
 		for j, v1 := range v.Attributes {
 			if v1.Value != "" {
 				v1.String()
 				if len(v.Attributes) > 1 && j < len(v.Attributes)-1 {
-					fmt.Print(" & ")
+					_,_ = OutputFile.Write([]byte(fmt.Sprint(" & ")))
 				}
 			}
 			if j == len(v.Attributes)-1 {
-				fmt.Print(" -----> ")
+				_,_ = OutputFile.Write([]byte(fmt.Sprint(" -----> ")))
 				v.Decision.String()
-				fmt.Print("\n")
+				_,_ = OutputFile.Write([]byte(fmt.Sprint("\n")))
 			}
 
 		}
 
 	}
+	//DieOnError(OutputFile.Close())
+	fmt.Print(OutputFile.String())
 }
 
 //Inter takes two integer slices and returns a slice of their intersection
@@ -219,7 +251,8 @@ func (e *Env) Algorithm() LocalCovering {
 
 				if selectedAttribute.Attribute != "" {
 					selectedAttributeList = append(selectedAttributeList, selectedAttribute)
-					mainGoal = Inter(e.AttributeValueBlock[selectedAttribute], mainGoal)
+						mainGoal = Inter(e.AttributeValueBlock[selectedAttribute],mainGoal)
+
 					//mainGoal = e.reduceDecisionsSet(e.AttributeValueBlock[selectedAttribute],mainGoal)
 					i = e.InitialIntersections(mainGoal)
 					if e.isInterval(selectedAttribute) {
@@ -270,7 +303,7 @@ func (e *Env) Algorithm() LocalCovering {
 						if tupleList[index].Attribute != "" {
 							av = tupleList[index]
 							for j := range tupleList {
-								if (av.Attribute != "" && tupleList[index].Attribute != "") && (av.Attribute == tupleList[index].Attribute) && av != tupleList[index] && e.IntervalContained(av, tupleList[index]) {
+								if (av.Attribute != "" && tupleList[index].Attribute != "") && (av.Attribute == tupleList[index].Attribute) && av != tupleList[index] && !e.IntervalContained(av, tupleList[index]) {
 									attribute, _ := e.SimplifyInterval(av, tupleList[j])
 									tupleList[index] = Tuple{}
 									tupleList[j] = attribute
@@ -465,6 +498,7 @@ func (e *Env) RuleCheck(ruleList RuleList, goal string) bool {
 		for _, v1 := range v.CasesCovered {
 
 			if ok := set[v1]; !ok {
+				fmt.Printf(" -----> ")
 				fmt.Printf("Rule covers %d while the decision set does not contain %d", v1, v1)
 				return false
 
@@ -609,3 +643,4 @@ func (e *Env) IntervalContained(t1, t2 Tuple) bool {
 	return false
 
 }
+

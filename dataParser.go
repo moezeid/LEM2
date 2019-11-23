@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	//"path"
 	"strconv"
 	"strings"
 )
@@ -15,6 +16,8 @@ func DieOnError(err error) {
 		panic(err)
 	}
 }
+
+var Path string
 
 type Env struct {
 	AttributeMap map[string][]*AttributeObject
@@ -30,6 +33,8 @@ type Env struct {
 	NumericMap map[string][]float64
 
 	FilePath string
+
+	FileEnv *os.File
 }
 
 type AttributeObject struct {
@@ -44,10 +49,10 @@ type Tuple struct {
 }
 
 func (a *AttributeObject) String() {
-	fmt.Printf("Attribute: %s, Value: %s case number: %d\n", a.attribute, a.value, a.caseNum)
+	_,_ =OutputFile.Write([]byte(fmt.Sprintf("Attribute: %s, Value: %s case number: %d\n", a.attribute, a.value, a.caseNum)))
 }
 func (t *Tuple) String() {
-	fmt.Printf("(%s, %s) ", t.Attribute, t.Value)
+	_,_ = OutputFile.Write([]byte(fmt.Sprintf("(%s, %s) ", t.Attribute, t.Value)))
 }
 
 func isSpecialCharacter(s string) bool {
@@ -66,7 +71,7 @@ func (e *Env) Parse() {
 	f, err := os.Open(e.FilePath)
 	for err != nil {
 		var input string
-		fmt.Print("Please enter a valid absolute filepath (include leading slash, e.g /path/to/file.txt): ")
+		fmt.Print("Please enter a valid absolute filepath (include leading slash if necessary, e.g /path/to/file.txt): ")
 		_, err = fmt.Scanln(&input)
 		f, err = os.Open(input)
 
